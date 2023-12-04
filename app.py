@@ -16,6 +16,15 @@ app = Flask(__name__)
 def get_emoji():
     return ":)"
 
+# Request:
+# GET /hello?name=David
+@app.route('/hello', methods=['GET'])
+def hello():
+    name = request.args['name'] # The value is 'David'
+
+    # Send back a friendly greeting with the name
+    return f"Hello {name}!"
+
 # This imports some more example routes for you to see how they work
 # You can delete these lines if you don't need them.
 from example_routes import apply_example_routes
