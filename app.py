@@ -21,20 +21,27 @@ def get_emoji():
 @app.route('/hello', methods=['GET'])
 def hello():
     name = request.args['name'] # The value is 'David'
-
     # Send back a friendly greeting with the name
     return f"Hello {name}!"
 
 # Request:
 # POST /goodbye
 #   With body parameter: name=Alice
-
 @app.route('/goodbye', methods=['POST'])
 def goodbye():
     name = request.form['name'] # The value is 'Alice'
-
     # Send back a fond farewell with the name
     return f"Goodbye {name}!"
+
+# Request:
+# POST /submit
+#   With body parameter: name=Leo and message=Hello world
+@app.route('/submit', methods=['POST'])
+def submit():
+    name = request.form['name'] 
+    message = request.form['message'] 
+    # Send back a reply
+    return f"Thanks {name}, you sent this message: '{message}'"
 
 # This imports some more example routes for you to see how they work
 # You can delete these lines if you don't need them.
