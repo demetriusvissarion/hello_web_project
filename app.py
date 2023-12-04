@@ -72,6 +72,19 @@ def count_vowels():
 # curl -X POST -d "text=eee" http://localhost:5001/count_vowels
 
 
+# Request:
+# POST /sort-names
+#   With body parameter: names=Alice,Joe,Julia,Kieran,Zoe
+@app.route('/sort-names', methods=['POST'])
+def sort_names():
+    names = request.form['names']
+    name_list = names.split(',')
+    name_list.sort()
+    comma_separated_string = ','.join(name_list)
+    return comma_separated_string
+# curl -X POST -d "names=Alice,Joe,Julia,Kieran,Zoe" http://localhost:5001/sort-names
+
+
 # This imports some more example routes for you to see how they work
 # You can delete these lines if you don't need them.
 from example_routes import apply_example_routes
