@@ -56,6 +56,22 @@ def wave():
     return f"I am waving at {name}"
 # curl -X POST -d "name=John" http://localhost:5001/wave
 
+
+# Request:
+# POST /count_vowels
+#   With body parameter: text=eee
+@app.route('/count_vowels', methods=['POST'])
+def count_vowels():
+    text = request.form['text']
+    # Send back number of vowels in the text
+    num_vowels=0
+    for char in text:
+        if char in "aeiouAEIOU":
+            num_vowels = num_vowels+1
+    return f'There are {num_vowels} vowels in "{text}"'
+# curl -X POST -d "text=eee" http://localhost:5001/count_vowels
+
+
 # This imports some more example routes for you to see how they work
 # You can delete these lines if you don't need them.
 from example_routes import apply_example_routes

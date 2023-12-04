@@ -1,25 +1,122 @@
-## Exercise
+## Exercise One
 
-Work through the following in `app.py` in your `hello_web_project` project.
+_Work in the same project directory `hello_web_project` for the following
+exercises._
 
-Create a new route that responds to requests sent with:
-  * A method `POST`
-  * A path `/submit`
-  * Body parameters `name` and `message`
+Add these tests to `tests/test_app.py` and use them to test-drive the
+implementation of a `POST /count_vowels` route.
 
-Here's the expected behaviour of this route:
+```python
+# File: tests/test_app.py
+
+"""
+When: I make a POST request to /count_vowels
+And: I send "eee" as the body parameter text
+Then: I should get a 200 response with 3 in the message
+"""
+def test_post_count_vowels_eee(web_client):
+    response = web_client.post('/count_vowels', data={'text': 'eee'})
+    assert response.status_code == 200
+    assert response.data.decode('utf-8') == 'There are 3 vowels in "eee"'
+
+"""
+When: I make a POST request to /count_vowels
+And: I send "eunoia" as the body parameter text
+Then: I should get a 200 response with 5 in the message
+"""
+def test_post_count_vowels_eunoia(web_client):
+    response = web_client.post('/count_vowels', data={'text': 'eunoia'})
+    assert response.status_code == 200
+    assert response.data.decode('utf-8') == 'There are 5 vowels in "eunoia"'
+
+"""
+When: I make a POST request to /count_vowels
+And: I send "mercurial" as the body parameter text
+Then: I should get a 200 response with 4 in the message
+"""
+def test_post_count_vowels_mercurial(web_client):
+    response = web_client.post('/count_vowels', data={'text': 'mercurial'})
+    assert response.status_code == 200
+    assert response.data.decode('utf-8') == 'There are 4 vowels in "mercurial"'
+```
+
+
+## Exercise Two
+
+Use [this Design Recipe](../resources/plain_route_recipe_template.md) to
+test-drive a new route `POST /sort-names` which receives a list of names (as a
+comma-separated string) and return the same list, sorted in alphabetical order.
+
+Here's a description of the expected behaviour:
 
 ```
 # Request:
-POST /submit
+POST http://localhost:5001/sort-names
 
 # With body parameters:
-name=Leo
-message=Hello world
+names=Joe,Alice,Zoe,Julia,Kieran
+
+# Expected response (sorted list of names):
+Alice,Joe,Julia,Kieran,Zoe
+```
+<details>
+  <summary>:confused: What do you mean a 'list of names', that's a string with commas in it!</summary>
+
+  ---
+
+  Well spotted. HTTP requests transfer everything as strings, both requests
+  and responses, so cannot transmit lists or other data structures directly.
+  
+  Here we've used commas to represent a list of items. You'll need to take the
+  string `"Joe,Alice,Zoe,Julia,Kieran"` and somehow transform it into a Python
+  list. You'll also need to do the reverse to transmit it back in the response.
+
+  In industry, there are various standardised formats to represent lists and
+  dictionaries as strings. One is called JSON, which you may want to research
+  if you are interested.
+
+  ---
+
+</details>
+
+
+
+## Challenge
+
+This is a process feedback challenge. That means you should record yourself
+doing it and submit that recording to your coach for feedback.
+
+Use the Design Recipe to test-drive the following route:
+
+```
+# Request:
+GET /names?add=Eddie
+
+# This route should return a list of pre-defined names, plus the name given.
 
 # Expected response (2OO OK):
-Thanks Leo, you sent this message: "Hello world"
+Julia, Alice, Karim, Eddie
 ```
 
-Make sure your server is running — then, using `curl` and Postman, check the
-route is working.
+You should assert that the response status code is `200` and that the response
+body is the correct string.
+
+<details>
+  <summary>:magnet: I want an extra challenge.</summary>
+
+  ---
+
+  For an extra challenge, add multiple names and sort them alphabetically.
+
+  ```
+  # Request:
+  GET /names?add=Eddie,Leo
+
+  # Expected response (2OO OK):
+  Alice, Eddie, Julia, Karim, Leo
+  ```
+
+  ---
+</details>
+
+After you're done, submit your recording
