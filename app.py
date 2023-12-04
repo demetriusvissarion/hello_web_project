@@ -25,6 +25,17 @@ def hello():
     # Send back a friendly greeting with the name
     return f"Hello {name}!"
 
+# Request:
+# POST /goodbye
+#   With body parameter: name=Alice
+
+@app.route('/goodbye', methods=['POST'])
+def goodbye():
+    name = request.form['name'] # The value is 'Alice'
+
+    # Send back a fond farewell with the name
+    return f"Goodbye {name}!"
+
 # This imports some more example routes for you to see how they work
 # You can delete these lines if you don't need them.
 from example_routes import apply_example_routes
