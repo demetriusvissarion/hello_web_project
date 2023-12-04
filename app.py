@@ -42,6 +42,18 @@ def submit():
     message = request.form['message'] 
     # Send back a reply
     return f"Thanks {name}, you sent this message: '{message}'"
+# curl -X POST -d "name=Leo&message=Hello World" http://localhost:5001/submit
+
+
+# Request:
+# GET /wave
+#   With body parameter: name=John
+@app.route('/wave', methods=['GET'])
+def wave():
+    name = request.form['name'] 
+    # Send back a reply
+    return f"I am waving at {name}"
+# curl -X POST -d "name=John" http://localhost:5001/wave
 
 # This imports some more example routes for you to see how they work
 # You can delete these lines if you don't need them.
