@@ -85,6 +85,21 @@ def sort_names():
 # curl -X POST -d "names=Alice,Joe,Julia,Kieran,Zoe" http://localhost:5001/sort-names
 
 
+# Request:
+# POST /names
+#   With body parameter: add=Eddie,Leo
+@app.route('/names', methods=['GET'])
+def add_names():
+    names = 'Julia,Alice,Karim,'
+    names_to_add = request.form['add']
+    names = names + names_to_add
+    name_list = names.split(',')
+    name_list.sort()
+    comma_separated_string = ', '.join(name_list)
+    return comma_separated_string
+# curl -X POST -d "names=Alice,Joe,Julia,Kieran,Zoe" http://localhost:5001/names
+
+
 # This imports some more example routes for you to see how they work
 # You can delete these lines if you don't need them.
 from example_routes import apply_example_routes
